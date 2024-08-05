@@ -7,7 +7,7 @@ public class BulletScript : MonoBehaviour
     private Vector3 position;
     private Vector3 direction;
     private Vector3 velocity;
-    private float speed = 15f;
+    private float speed = 50;
 
     private Vector3 rotation;
 
@@ -29,6 +29,7 @@ public class BulletScript : MonoBehaviour
         direction = player.aimDirection + (player.transform.position - gun.transform.position);
 
         lineRenderer = GetComponent<LineRenderer>();
+        endP = gun.transform.position;
     }
 
     // Update is called once per frame
@@ -46,7 +47,6 @@ public class BulletScript : MonoBehaviour
         else
         {
             startP = transform.position;
-            endP = gun.transform.position;
         }
 
         lineRenderer.SetPosition(0, startP);
@@ -58,9 +58,9 @@ public class BulletScript : MonoBehaviour
         DestroySelf();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Switch")
         {
             isEnd = true;
         }

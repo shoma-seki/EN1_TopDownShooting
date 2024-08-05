@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Wall
   - Ground
+  - Switch
+  - Bullet
+  - MoveWall
   layers:
   - Default
   - TransparentFX

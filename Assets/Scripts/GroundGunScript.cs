@@ -6,6 +6,8 @@ public class GroundGunScript : MonoBehaviour
 {
     private PlayerScript player;
 
+    private Vector3 rotate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,8 @@ public class GroundGunScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        rotate.y += 45.0f * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(rotate);
     }
 
     private void OnTriggerEnter(Collider other)

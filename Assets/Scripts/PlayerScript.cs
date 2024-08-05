@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private Vector3 position;
+    private Rigidbody rb;
     private Vector3 direction;
     private Vector3 velocity;
-    private float speed = 4f;
+    private float speed = 1500f;
 
     private Vector3 rotation;
 
@@ -20,7 +20,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        position = transform.position;
+        rb = GetComponent<Rigidbody>();
+
         rotation = transform.rotation.eulerAngles;
 
         gun = transform.GetChild(0).gameObject;
@@ -32,8 +33,7 @@ public class PlayerScript : MonoBehaviour
         direction.z = Input.GetAxis("Vertical");
         direction.x = Input.GetAxis("Horizontal");
         velocity = direction * speed * Time.deltaTime;
-        position += velocity;
-        transform.position = position;
+        rb.velocity = velocity;
 
         aimDirection = aimPosition - transform.position;
         aimDirection.y = 0f;

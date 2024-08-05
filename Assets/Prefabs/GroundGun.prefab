@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c188315f53ee384e8ea7988088de2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 0}
+  CanShot: 1
 --- !u!135 &1351003099963519259
 SphereCollider:
   m_ObjectHideFlags: 0
