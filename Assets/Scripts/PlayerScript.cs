@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody rb;
     private Vector3 direction;
     private Vector3 velocity;
-    private float speed = 1500f;
+    private float speed = 100f;
 
     private Vector3 rotation;
 

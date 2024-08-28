@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveWall : MonoBehaviour
 {
     public int wallNumber;
+    public int openCount;
     public bool isMove;
 
     private Vector3 position;
@@ -18,6 +19,11 @@ public class MoveWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (openCount <= 0)
+        {
+            isMove = true;
+        }
+
         if (isMove)
         {
             position.y -= 0.5f * Time.deltaTime;

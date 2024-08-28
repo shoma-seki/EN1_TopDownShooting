@@ -6,6 +6,7 @@ public class CameraScript : MonoBehaviour
 {
     private Camera cam;
     private Vector3 hitPoint;
+    public LayerMask ignoreLayer;
 
     private PlayerScript player;
     private LayerMask playerLayer;
@@ -38,17 +39,17 @@ public class CameraScript : MonoBehaviour
 
     private void CameraMove()
     {
-        if (Vector3.Distance(player.transform.position, hitPoint) > 10f)
+        if (Vector3.Distance(player.transform.position, hitPoint) > 5f)
         {
             endPosition = Vector3.Lerp(player.transform.position,
-               (hitPoint - player.transform.position).normalized * 10f, 0.5f);
+               (hitPoint - player.transform.position).normalized * 6f, 5000f * Time.deltaTime);
         }
         else
         {
-            endPosition = Vector3.Lerp(player.transform.position, hitPoint - player.transform.position, 0.5f);
+            endPosition = Vector3.Lerp(player.transform.position, hitPoint - player.transform.position, 5000f * Time.deltaTime);
         }
-        position = Vector3.Lerp(position, endPosition, t);
-        transform.position = position + positionPlus;
+        position = Vector3.Lerp(position, endPosition, t * Time.deltaTime);
+        transform.position = player.transform.position + position + positionPlus;
     }
 
     private void RayCasting()
@@ -56,7 +57,7 @@ public class CameraScript : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ignoreLayer))
         {
             if (hit.collider.gameObject.tag == "Ground")
             {
