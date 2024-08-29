@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimDirection: {x: 0, y: 0, z: 0}
   isGrabGun: 0
+  getAnimation: {fileID: 926807649565737096, guid: 2e1e7741cfc685b4aa622d95ee3c09fd, type: 3}
 --- !u!136 &4003888190489327412
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -60,7 +60,8 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Switch")
+        if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Switch" ||
+            other.gameObject.tag == "MoveWall" || other.gameObject.tag == "Enemy")
         {
             isEnd = true;
         }

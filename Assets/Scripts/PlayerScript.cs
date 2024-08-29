@@ -17,6 +17,8 @@ public class PlayerScript : MonoBehaviour
     public bool isGrabGun = false;
     private GameObject gun;
 
+    public GameObject getAnimation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,8 @@ public class PlayerScript : MonoBehaviour
         if (isGrabGun)
         {
             gun.SetActive(true);
+            Instantiate(getAnimation, transform.position, Quaternion.identity);
+            isGrabGun = false;
         }
     }
 
