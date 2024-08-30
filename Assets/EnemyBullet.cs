@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     private Vector3 position;
     private Vector3 direction;
@@ -17,16 +17,16 @@ public class BulletScript : MonoBehaviour
     private Vector3 startP;
     private Vector3 endP;
 
-    PlayerScript player;
-    GunScript gun;
+    EnemyScript enemy;
+    EnemyGunScript gun;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindAnyObjectByType<PlayerScript>();
-        gun = FindAnyObjectByType<GunScript>();
+        enemy = FindAnyObjectByType<EnemyScript>();
+        gun = FindAnyObjectByType<EnemyGunScript>();
         position = transform.position;
-        direction = player.aimDirection + (player.transform.position - gun.transform.position);
+        direction = enemy.direction + (enemy.transform.position - gun.transform.position);
 
         lineRenderer = GetComponent<LineRenderer>();
         endP = gun.transform.position;
@@ -39,14 +39,22 @@ public class BulletScript : MonoBehaviour
         position += velocity;
         transform.position = position;
 
-        if (Vector3.Distance(player.transform.position, transform.position) >= 5f)
+        if (enemy == null)
         {
             startP = transform.position;
             endP = transform.position - direction.normalized * 5f;
         }
         else
         {
-            startP = transform.position;
+            if (Vector3.Distance(enemy.transform.position, transform.position) >= 5f)
+            {
+                startP = transform.position;
+                endP = transform.position - direction.normalized * 5f;
+            }
+            else
+            {
+                startP = transform.position;
+            }
         }
 
         lineRenderer.SetPosition(0, startP);
@@ -61,7 +69,7 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Wall" || other.gameObject.tag == "Switch" ||
-            other.gameObject.tag == "MoveWall" || other.gameObject.tag == "Enemy")
+            other.gameObject.tag == "MoveWall" || other.gameObject.tag == "Player")
         {
             isEnd = true;
         }

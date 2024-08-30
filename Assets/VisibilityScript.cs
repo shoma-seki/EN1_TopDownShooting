@@ -30,9 +30,12 @@ public class VisibilityScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            transform.parent.GetComponent<EnemyScript>().isSearch = true;
-            transform.parent.GetComponent<EnemyScript>().searchTime = 2.0f;
-            Instantiate(Question, new Vector3(transform.parent.position.x, transform.parent.position.y + 1.5f, transform.parent.position.z), Quaternion.identity);
+            if (transform.parent.GetComponent<EnemyScript>().isSearch == false)
+            {
+                transform.parent.GetComponent<EnemyScript>().isSearch = true;
+                transform.parent.GetComponent<EnemyScript>().searchTime = 2.0f;
+                Instantiate(Question, new Vector3(transform.parent.position.x, transform.parent.position.y + 1.5f, transform.parent.position.z), Quaternion.identity);
+            }
         }
     }
 }

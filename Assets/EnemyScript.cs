@@ -7,7 +7,7 @@ using UnityEngine.Animations;
 public class EnemyScript : MonoBehaviour
 {
     private Rigidbody rb;
-    private Vector3 direction;
+    public Vector3 direction;
     private Vector3 velocity;
     private float speed = 50;
 
@@ -20,6 +20,8 @@ public class EnemyScript : MonoBehaviour
     public bool isSearch;
     public float kSearchTime = 2.0f;
     public float searchTime;
+
+    public GameObject particle;
 
     // Start is called before the first frame update
     void Start()
@@ -37,17 +39,6 @@ public class EnemyScript : MonoBehaviour
         RaycastHit hit;
 
         Debug.DrawRay(ray.origin, ray.direction, Color.red);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            if (hit.collider.gameObject.tag == "Wall")
-            {
-                if (isView)
-                {
-                    isSearch = true;
-                }
-            }
-        }
 
         if (isView == false && isSearch == false)
         {
@@ -73,10 +64,28 @@ public class EnemyScript : MonoBehaviour
         {
             speed = 0;
             direction = player.transform.position - transform.position;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.tag == "Wall")
+                {
+                    if (isView)
+                    {
+                        isSearch = true;
+                    }
+                }
+            }
+
         }
 
         if (isSearch)
         {
+            if (isView)
+            {
+                //isSearch = false;
+                isView = false;
+            }
+
             searchTime -= Time.deltaTime;
             if (searchTime <= 0)
             {
@@ -132,6 +141,7 @@ public class EnemyScript : MonoBehaviour
     private void DestroySelf()
     {
         Destroy(gameObject);
+        Instantiate(particle, new Vector3(transform.position.x, transform.position.y + 1.3f, transform.position.z), Quaternion.identity);
         GameObject[] moveWalls = GameObject.FindGameObjectsWithTag("MoveWall");
         foreach (GameObject moveWall in moveWalls)
         {
